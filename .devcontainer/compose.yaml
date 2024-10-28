@@ -1,0 +1,9 @@
+services:
+  cli:
+    image: "ghcr.io/easy-ebpf/tutorial-simple-example:latest"
+    privileged: true
+    volumes:
+      - ..:/workspaces/cli
+      - ./fish:/root/.config/fish
+      - /sys/kernel/tracing:/sys/kernel/tracing:ro
+      - /sys/kernel/debug:/sys/kernel/debug:ro

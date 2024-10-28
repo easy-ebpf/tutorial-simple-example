@@ -1,0 +1,25 @@
+{
+  "name": "Minimal eBPF example LAB",
+  "service": "cli",
+  "remoteUser": "root",
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspaces/cli",
+  "dockerComposeFile": "compose.yaml",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "stateful.runme",
+        "golang.Go",
+      ],
+      "settings": {
+        "go.useLanguageServer": true,
+        "editor.fontSize": 18,
+        "editor.minimap.enabled": false,
+        "workbench.editorAssociations": {
+            "*.md": "markdown.preview.editor"
+        }
+      }
+    }
+  }
+}
