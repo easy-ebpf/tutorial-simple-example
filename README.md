@@ -5,9 +5,9 @@
   This is the eBPF program we're going to load into the Kernel.
 
 - `minimal.c` :  
-  This file is our frontend in the userspace, which is responsible for loading the eBPF program into Kernel.
+  This file is our frontend in the userspace, and it is responsible for loading the eBPF program into Kernel.
 
-## 2. Running eBPF program
+## 2. Running the eBPF program
 
 ```bash
 make run
@@ -23,3 +23,4 @@ make trace
 
 Try to modify the eBPF program, and compile & run it again.  
 Does the output change with your modification?
+

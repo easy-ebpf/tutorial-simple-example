@@ -10,10 +10,9 @@
     "vscode": {
       "extensions": [
         "stateful.runme",
-        "golang.Go",
+        "ms-vscode.cpptools-extension-pack",
       ],
       "settings": {
-        "go.useLanguageServer": true,
         "editor.fontSize": 18,
         "editor.minimap.enabled": false,
         "workbench.editorAssociations": {
