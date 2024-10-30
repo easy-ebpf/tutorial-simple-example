@@ -3,19 +3,24 @@
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
+#include <linux/sched.h>
 
 typedef int pid_t;
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
 
-int my_pid = 0;
+unsigned long long dev;
+unsigned long long ino;
 
 SEC("tp/syscalls/sys_enter_open")
 int handle_tp(void *ctx)
 {
 
-    pid_t pid = bpf_get_current_pid_tgid() >> 32;
-    bpf_printk("BPF triggered sys_enter_write from PID %d.\n", pid);
+    struct bpf_pidns_info ns;
+
+	bpf_get_ns_current_pid_tgid(dev, ino, &ns, sizeof(ns));
+    
+    bpf_printk("BPF triggered sys_enter_write from PID %d.\n", ns.pid);
 
     return 0;
 }

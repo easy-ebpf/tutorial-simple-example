@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/resource.h>
+#include <sys/stat.h>
 #include <bpf/libbpf.h>
 #include "minimal.skel.h"
 
@@ -15,6 +16,7 @@ int main(int argc, char **argv)
 {
 	struct minimal_bpf *skel;
 	int err;
+	struct stat sb;
 
 	/* Set up libbpf errors and debug info callback */
 	libbpf_set_print(libbpf_print_fn);
@@ -26,8 +28,13 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	/* ensure BPF program only handles write() syscalls from our process */
-	skel->bss->my_pid = getpid();
+	/* ensure BPF program only handles write() syscalls from our namespace */
+	if (stat("/proc/self/ns/pid", &sb) == -1) {
+		fprintf(stderr, "Failed to acquire namespace information");
+		return 1;
+	}
+	skel->bss->dev = sb.st_dev;
+	skel->bss->ino = sb.st_ino;
 
 	/* Load & verify BPF programs */
 	err = minimal_bpf__load(skel);
